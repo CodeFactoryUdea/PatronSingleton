@@ -2,7 +2,7 @@ package Singleton;
 
 import java.sql.*;
 
-public class EjemploSingleton implements DataBase
+public class EjemploSingleton 
 {
 	
 	private String url;
@@ -14,18 +14,21 @@ public class EjemploSingleton implements DataBase
 	//Constructor
 	public EjemploSingleton()
 	{
-		String url = "jdbc:mysql://localhost:3306/test";
+		String url = "jdbc:mysql://localhost:3306/udea";
  		String driver = "com.mysql.jdbc.Driver";
- 		String user = "usuario";
- 		String password = "password";
+ 		String user = "root";
+ 		String password = "";
 
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, user, password);
+			if(conn != null){
+                            System.out.println("Conexión establecida...");
+                        }
 		} 
 		
 		catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			System.out.println("Error al conectar..." + e);
 		}
 	}
 	//Fin constructor
@@ -38,4 +41,12 @@ public class EjemploSingleton implements DataBase
 		return conn;
 	}
 	//Fin getConnection
+	
+	//con este método nos desconectamos de la bd
+        public void desconectar(){
+        conn = null;
+        if(conn == null){
+            System.out.println("Conexión terminada...");
+        }
+    }
 }
