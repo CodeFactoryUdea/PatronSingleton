@@ -10,6 +10,8 @@ public class EjemploSingleton
 	private String user;
 	private String password;
 	private static Connection conn=null;
+	Statement st=null;
+        ResultSet rs=null;
 	
 	//Constructor
 	public EjemploSingleton()
@@ -22,8 +24,18 @@ public class EjemploSingleton
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, user, password);
-			if(conn != null){
-                            System.out.println("Conexión establecida...");
+			st=conn.createStatement();
+                        rs=st.executeQuery("Select * from alumnos");
+                        while(rs.next())
+                        { int idAlumno=rs.getInt(1);
+                          String nombreAlumno=rs.getString(2);
+                          String apellidoAlumno=rs.getString(3);
+                          int edadAlumno=rs.getInt(4);
+                          String direccionAlumno=rs.getString(5);
+                          System.out.println("id del alumno: " + idAlumno 
+                                    + "\nnombre: " + nombreAlumno + "\napellido: " +
+                                    apellidoAlumno + "\nedad: " + edadAlumno + 
+                                    "\ndireccion: " + direccionAlumno );
                         }
 		} 
 		
